@@ -1,0 +1,18 @@
+[[ $- != *i* ]] && return
+
+ORANGE="\[\033[38;5;208m\]"
+WHITE="\[\033[38;5;15m\]"
+LIGHT_BLUE="\[\033[38;5;51m\]"
+BLUE="\[\033[38;5;33m\]"
+GREEN='\[\033[0;32m\]'
+
+parse_git_branch() {
+    local branch
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+    if [[ -n "$branch" ]]; then
+        echo " ($branch)"
+    fi
+}
+
+export PS1="${ORANGE}\u${WHITE}@${LIGHT_BLUE}\h${WHITE}:${BLUE}\w${GREEN}\$(parse_git_branch) ${ORANGE}➤${WHITE} "
