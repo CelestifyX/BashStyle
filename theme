@@ -1,18 +1,22 @@
 [[ $- != *i* ]] && return
 
-ORANGE="\[\033[38;5;208m\]"
-WHITE="\[\033[38;5;15m\]"
-LIGHT_BLUE="\[\033[38;5;51m\]"
-BLUE="\[\033[38;5;33m\]"
-GREEN='\[\033[0;32m\]'
+DARK_BLUE="\e[0;34m"
+BRIGHT_GREEN="\e[1;32m"
+BRIGHT_BLUE="\e[1;34m"
+CYAN="\e[0;36m"
+BRIGHT_PURPLE="\e[1;35m"
+BRIGHT_WHITE="\e[1;37m"
+RESET="\e[0m"
+BRIGHT_YELLOW="\e[0;33m"
 
 parse_git_branch() {
     local branch
     branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
     if [[ -n "$branch" ]]; then
-        echo " ($branch)"
+        echo -e "${RESET}- ${DARK_BLUE}[${BRIGHT_YELLOW}$branch${DARK_BLUE}]"
     fi
 }
 
-export PS1="${ORANGE}\u${WHITE}@${LIGHT_BLUE}\h${WHITE}:${BLUE}\w${GREEN}\$(parse_git_branch) ${ORANGE}➤${WHITE} "
+PS1="${DARK_BLUE}┌─[${BRIGHT_GREEN}\u${BRIGHT_BLUE}@${CYAN}\h${DARK_BLUE}]${RESET} - ${DARK_BLUE}[${BRIGHT_WHITE}\w${DARK_BLUE}] \$(parse_git_branch)\n${DARK_BLUE}└─[${BRIGHT_PURPLE}\$${DARK_BLUE}]${RESET} "
+PS2=" ${DARK_BLUE}>${RESET} "
