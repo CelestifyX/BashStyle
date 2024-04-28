@@ -14,9 +14,16 @@ parse_git_branch() {
     branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
     if [[ -n "$branch" ]]; then
-        echo -e "${RESET}- ${DARK_BLUE}[${BRIGHT_YELLOW}$branch${DARK_BLUE}]"
+        echo -e " ${RESET}- ${DARK_BLUE}[${BRIGHT_YELLOW}${branch}${DARK_BLUE}]"
     fi
 }
 
-PS1="${DARK_BLUE}┌─[${BRIGHT_GREEN}\u${BRIGHT_BLUE}@${CYAN}\h${DARK_BLUE}]${RESET} - ${DARK_BLUE}[${BRIGHT_WHITE}\w${DARK_BLUE}] \$(parse_git_branch)\n${DARK_BLUE}└─[${BRIGHT_PURPLE}\$${DARK_BLUE}]${RESET} "
+get_time() {
+    local time
+    time=$(date +"%-I:%M %p")
+
+    echo -e " ${RESET}- ${DARK_BLUE}[${BRIGHT_WHITE}${time}${DARK_BLUE}]"
+}
+
+PS1="${DARK_BLUE}┌─[${BRIGHT_GREEN}\u${BRIGHT_BLUE}@${CYAN}\h${DARK_BLUE}]${RESET} - ${DARK_BLUE}[${BRIGHT_WHITE}\w${DARK_BLUE}]\$(parse_git_branch)\$(get_time)\n${DARK_BLUE}└─[${BRIGHT_PURPLE}\$${DARK_BLUE}]${RESET} "
 PS2=" ${DARK_BLUE}>${RESET} "
